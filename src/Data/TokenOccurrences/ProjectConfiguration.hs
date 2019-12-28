@@ -9,15 +9,16 @@ module Data.TokenOccurrences.ProjectConfiguration
 
 import Control.Applicative ((<|>))
 import Data.Hashable (Hashable)
-import qualified Data.List as L
 import qualified Data.Maybe as M
+import qualified Data.Text as T
+import Data.TextPredicateMatch
 import GHC.Generics (Generic)
 
 data ProjectConfiguration = ProjectConfiguration
-    { configurationName :: String
-    , applicationCodeDirectories :: [String]
-    , testCodeDirectories :: [String]
-    , configCodeDirectories :: [String]
+    { configurationName :: T.Text
+    , applicationCodeDirectories :: [T.Text]
+    , testCodeDirectories :: [T.Text]
+    , configCodeDirectories :: [T.Text]
     }
 
 data FileType
@@ -48,8 +49,8 @@ decorateFilePath ProjectConfiguration { applicationCodeDirectories = app
         calculateFileType path test TestFile <|>
         calculateFileType path config ConfigFile
 
-calculateFileType :: FilePath -> [String] -> FileType -> Maybe FileType
+calculateFileType :: FilePath -> [T.Text] -> FileType -> Maybe FileType
 calculateFileType path paths defaultType =
-    if any (`L.isPrefixOf` path) paths
+    if any (check (T.pack path) . StartsWith) paths
         then Just defaultType
         else Nothing

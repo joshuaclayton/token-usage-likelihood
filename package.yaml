@@ -30,7 +30,9 @@ dependencies:
 
 library:
   source-dirs: src
-  exposed-modules: Data.TokenOccurrences
+  exposed-modules:
+  - Data.TokenOccurrences
+  - Data.TextPredicateMatch
 
 tests:
   token-usage-likelihood-test:
