@@ -1,0 +1,4 @@
+.stack-work/
+token-usage-likelihood.cabal
+*~
+tmp/

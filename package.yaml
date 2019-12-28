@@ -1,0 +1,45 @@
+name:                token-usage-likelihood
+version:             0.1.0.0
+github:              "joshuaclayton/token-usage-likelihood"
+license:             MIT
+author:              "Josh Clayton"
+maintainer:          "sayhi@joshuaclayton.me"
+copyright:           "2019 Josh Clayton"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+default-extensions:  OverloadedStrings
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/joshuaclayton/token-usage-likelihood#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- unordered-containers
+- text
+- filepath
+- hashable
+
+library:
+  source-dirs: src
+  exposed-modules: Data.TokenOccurrences
+
+tests:
+  token-usage-likelihood-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - token-usage-likelihood
+    - hspec
