@@ -5,7 +5,8 @@ import qualified Data.Text as T
 import Data.TextPredicateMatch
 import Data.TokenOccurrences
 import Data.TokenOccurrences.ProjectConfiguration
-import Data.TokenUsageLikelihood as L
+import Data.TokenUsageLikelihood.Calculator
+import Data.TokenUsageLikelihood.Types
 import Test.Hspec
 
 main :: IO ()

@@ -1,13 +1,12 @@
 module Data.TokenOccurrences
     ( TokenAndOccurrences(..)
     , ProjectConfiguration(..)
-    , Output
     , Input(..)
     , TokenOccurrences
+    , Occurrences
     , fileCount
     , occurrenceCount
     , processInput
-    , input
     , totalOccurrences
     , unknownOccurrences
     , configDirectoryOccurrences
@@ -19,14 +18,9 @@ import qualified Data.HashMap.Strict as HashMap
 import Data.TokenOccurrences.ProjectConfiguration
 import Data.TokenOccurrences.Types
 
-processInput :: ProjectConfiguration -> Input a -> Output a
+processInput :: ProjectConfiguration -> Input a -> Occurrences
 processInput config input' =
-    Output
-        input'
-        (go ApplicationFile)
-        (go TestFile)
-        (go ConfigFile)
-        (go Unknown)
+    Occurrences (go ApplicationFile) (go TestFile) (go ConfigFile) (go Unknown)
   where
     go ft =
         handle calculateOccurrences $
@@ -34,7 +28,7 @@ processInput config input' =
     handle f (Token occ) = f occ
     handle f (TokenAndAlias occ ali) = f occ <> f ali
 
-totalOccurrences :: Output a -> TokenOccurrences
+totalOccurrences :: Occurrences -> TokenOccurrences
 totalOccurrences o =
     foldl1
         mappend

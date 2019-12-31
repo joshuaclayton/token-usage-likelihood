@@ -1,7 +1,5 @@
-module Data.TokenUsageLikelihood
-    ( RemovalLikelihood(..)
-    , TokenRemoval(..)
-    , analyze
+module Data.TokenUsageLikelihood.Calculator
+    ( calculateTokenUsage
     ) where
 
 import qualified Data.Text as T
@@ -9,13 +7,6 @@ import Data.TokenOccurrences
 import Data.TokenOccurrences.ProjectConfiguration
 import Data.TokenUsageLikelihood.Internal
 import Data.TokenUsageLikelihood.Types
-
-analyze :: ProjectConfiguration -> Input T.Text -> TokenRemoval T.Text
-analyze config input' =
-    TokenRemoval
-        input'
-        (processInput config input')
-        (calculateTokenUsage config input')
 
 calculateTokenUsage :: ProjectConfiguration -> Input T.Text -> RemovalLikelihood
 calculateTokenUsage config input' =

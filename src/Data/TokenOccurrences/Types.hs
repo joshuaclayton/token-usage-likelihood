@@ -1,8 +1,8 @@
 module Data.TokenOccurrences.Types
     ( TokenAndOccurrences(..)
-    , Output(..)
     , Input(..)
     , TokenOccurrences
+    , Occurrences(..)
     , fileCount
     , buildTokenOccurrences
     , occurrenceCount
@@ -19,9 +19,8 @@ data Input a
     | TokenAndAlias (TokenAndOccurrences a)
                     (TokenAndOccurrences a)
 
-data Output a = Output
-    { input :: Input a
-    , applicationDirectoryOccurrences :: TokenOccurrences
+data Occurrences = Occurrences
+    { applicationDirectoryOccurrences :: TokenOccurrences
     , testDirectoryOccurrences :: TokenOccurrences
     , configDirectoryOccurrences :: TokenOccurrences
     , unknownOccurrences :: TokenOccurrences
