@@ -59,7 +59,7 @@ spec =
                 AutomaticLowRemovalLikelihood
                     "Automatic low likelihood: detected as Rails Migration"
 
-definitionAndTest :: Input T.Text FilePath
+definitionAndTest :: Input T.Text
 definitionAndTest =
     TokenAndAlias
         (TokenAndOccurrences
@@ -69,21 +69,21 @@ definitionAndTest =
              "is_admin"
              (HashMap.fromList [("spec/models/person_spec.rb", 3)]))
 
-onlyDefinition :: Input T.Text FilePath
+onlyDefinition :: Input T.Text
 onlyDefinition =
     Token
         (TokenAndOccurrences
              "with_comments"
              (HashMap.fromList [("app/models/post.rb", 1)]))
 
-onlyTestDefinition :: Input T.Text FilePath
+onlyTestDefinition :: Input T.Text
 onlyTestDefinition =
     Token
         (TokenAndOccurrences
              "generate_test_data"
              (HashMap.fromList [("spec/support/fixture_helpers.rb", 1)]))
 
-moderateUseDefinition :: Input T.Text FilePath
+moderateUseDefinition :: Input T.Text
 moderateUseDefinition =
     Token
         (TokenAndOccurrences
@@ -94,7 +94,7 @@ moderateUseDefinition =
                   , ("spec/models/user_spec.rb", 3)
                   ]))
 
-widelyUsedDefinition :: Input T.Text FilePath
+widelyUsedDefinition :: Input T.Text
 widelyUsedDefinition =
     Token
         (TokenAndOccurrences
@@ -106,14 +106,14 @@ widelyUsedDefinition =
                   , ("spec/models/user_spec.rb", 5)
                   ]))
 
-patternMatchedDefinition :: Input T.Text FilePath
+patternMatchedDefinition :: Input T.Text
 patternMatchedDefinition =
     Token
         (TokenAndOccurrences
              "by_user"
              (HashMap.fromList [("web/models/post.ex", 2)]))
 
-railsMigration :: Input T.Text FilePath
+railsMigration :: Input T.Text
 railsMigration =
     Token
         (TokenAndOccurrences

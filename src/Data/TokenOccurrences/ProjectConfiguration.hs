@@ -1,8 +1,5 @@
-{-# LANGUAGE DeriveGeneric #-}
-
 module Data.TokenOccurrences.ProjectConfiguration
     ( ProjectConfiguration(..)
-    , FilePathWithMetadata(..)
     , AutomaticLowLikelihood(..)
     , Matcher(..)
     , FileType(..)
@@ -10,11 +7,9 @@ module Data.TokenOccurrences.ProjectConfiguration
     ) where
 
 import Control.Applicative ((<|>))
-import Data.Hashable (Hashable)
 import qualified Data.Maybe as M
 import qualified Data.Text as T
 import Data.TextPredicateMatch
-import GHC.Generics (Generic)
 
 data ProjectConfiguration = ProjectConfiguration
     { configurationName :: T.Text
@@ -40,23 +35,13 @@ data FileType
     | TestFile
     | ConfigFile
     | Unknown
-    deriving (Eq, Generic)
+    deriving (Eq)
 
-instance Hashable FileType
-
-data FilePathWithMetadata = FilePathWithMetadata
-    { filePath :: FilePath
-    , fileType :: FileType
-    } deriving (Eq, Generic)
-
-instance Hashable FilePathWithMetadata
-
-decorateFilePath :: ProjectConfiguration -> FilePath -> FilePathWithMetadata
+decorateFilePath :: ProjectConfiguration -> FilePath -> FileType
 decorateFilePath ProjectConfiguration { applicationCodeDirectories = app
                                       , testCodeDirectories = test
                                       , configCodeDirectories = config
-                                      } path =
-    FilePathWithMetadata path (M.fromMaybe Unknown go)
+                                      } path = M.fromMaybe Unknown go
   where
     go =
         calculateFileType path app ApplicationFile <|>

@@ -9,8 +9,7 @@ import Data.TokenOccurrences.ProjectConfiguration
 import Data.TokenUsageLikelihood.Internal
 import Data.TokenUsageLikelihood.Types
 
-calculateTokenUsage ::
-       ProjectConfiguration -> Input T.Text FilePath -> RemovalLikelihood
+calculateTokenUsage :: ProjectConfiguration -> Input T.Text -> RemovalLikelihood
 calculateTokenUsage config input' =
     case autoLowLikelihood of
         Nothing

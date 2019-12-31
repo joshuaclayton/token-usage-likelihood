@@ -16,12 +16,10 @@ module Data.TokenOccurrences
     ) where
 
 import qualified Data.HashMap.Strict as HashMap
-import Data.Hashable (Hashable)
-import Data.TokenOccurrences.Internal
 import Data.TokenOccurrences.ProjectConfiguration
 import Data.TokenOccurrences.Types
 
-processInput :: ProjectConfiguration -> Input a FilePath -> Output a FilePath
+processInput :: ProjectConfiguration -> Input a -> Output a
 processInput config input' =
     Output
         input'
@@ -30,14 +28,13 @@ processInput config input' =
         (go ConfigFile)
         (go Unknown)
   where
-    withDecoratedFilePaths = mapFilePaths (decorateFilePath config) input'
     go ft =
         handle calculateOccurrences $
-        filterInput (\md -> fileType md == ft) withDecoratedFilePaths
+        filterInput (\md -> decorateFilePath config md == ft) input'
     handle f (Token occ) = f occ
     handle f (TokenAndAlias occ ali) = f occ <> f ali
 
-totalOccurrences :: Output a b -> TokenOccurrences
+totalOccurrences :: Output a -> TokenOccurrences
 totalOccurrences o =
     foldl1
         mappend
@@ -47,10 +44,10 @@ totalOccurrences o =
         , unknownOccurrences o
         ]
 
-calculateOccurrences :: TokenAndOccurrences a b -> TokenOccurrences
+calculateOccurrences :: TokenAndOccurrences a -> TokenOccurrences
 calculateOccurrences (TokenAndOccurrences _ map') = buildTokenOccurrences map'
 
-filterInput :: (b -> Bool) -> Input a b -> Input a b
+filterInput :: (FilePath -> Bool) -> Input a -> Input a
 filterInput f (Token a) = Token (filterTokenAndOccurrences f a)
 filterInput f (TokenAndAlias a b) =
     TokenAndAlias
@@ -58,18 +55,6 @@ filterInput f (TokenAndAlias a b) =
         (filterTokenAndOccurrences f b)
 
 filterTokenAndOccurrences ::
-       (b -> Bool) -> TokenAndOccurrences a b -> TokenAndOccurrences a b
+       (FilePath -> Bool) -> TokenAndOccurrences a -> TokenAndOccurrences a
 filterTokenAndOccurrences f (TokenAndOccurrences a b) =
     TokenAndOccurrences a (HashMap.filterWithKey (\k _ -> f k) b)
-
-mapFilePaths ::
-       (Hashable b, Hashable c, Eq b, Eq c)
-    => (b -> c)
-    -> Input a b
-    -> Input a c
-mapFilePaths f (Token (TokenAndOccurrences a' b')) =
-    Token $ TokenAndOccurrences a' (mapKeys f b')
-mapFilePaths f (TokenAndAlias (TokenAndOccurrences a' b') (TokenAndOccurrences a'' b'')) =
-    TokenAndAlias
-        (TokenAndOccurrences a' (mapKeys f b'))
-        (TokenAndOccurrences a'' (mapKeys f b''))

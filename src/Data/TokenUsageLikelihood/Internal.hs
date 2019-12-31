@@ -16,26 +16,24 @@ import Data.TokenOccurrences.ProjectConfiguration
 import Data.TokenOccurrences.Types
 import Numeric.Natural (Natural)
 
-noTestOccurrences :: Output a b -> Bool
+noTestOccurrences :: Output a -> Bool
 noTestOccurrences output = occurrenceCountByFileType TestFile output == 0
 
-oneTestOccurrence :: Output a b -> Bool
+oneTestOccurrence :: Output a -> Bool
 oneTestOccurrence output = occurrenceCountByFileType TestFile output == 1
 
-oneApplicationOccurrence :: Output a b -> Bool
+oneApplicationOccurrence :: Output a -> Bool
 oneApplicationOccurrence output =
     occurrenceCountByFileType ApplicationFile output == 1
 
-occursInOneFile :: Output a b -> Bool
+occursInOneFile :: Output a -> Bool
 occursInOneFile output = totalFileCount output == 1
 
-occursMoreThanOnce :: Output a b -> Bool
+occursMoreThanOnce :: Output a -> Bool
 occursMoreThanOnce output = totalOccurrenceCount output > 1
 
 matchesAutomaticLowLikelihood ::
-       [AutomaticLowLikelihood]
-    -> Output T.Text FilePath
-    -> Maybe AutomaticLowLikelihood
+       [AutomaticLowLikelihood] -> Output T.Text -> Maybe AutomaticLowLikelihood
 matchesAutomaticLowLikelihood lowLikelihoods output =
     safeHead $ filter (matchesAll output) lowLikelihoods
   where
@@ -43,7 +41,7 @@ matchesAutomaticLowLikelihood lowLikelihoods output =
     safeHead (x:_) = Just x
     matchesAll o ll = all (matchesOutput o) (automaticLowLikelihoodMatchers ll)
 
-matchesOutput :: Output T.Text FilePath -> Matcher -> Bool
+matchesOutput :: Output T.Text -> Matcher -> Bool
 matchesOutput output matcher =
     case matcher of
         TokenMatch pre -> any (`check` pre) $ inputTokenNames $ input output
@@ -52,19 +50,19 @@ matchesOutput output matcher =
         FileTypeOccurrenceMatch ft count ->
             fromIntegral (fileCountByFileType ft output) == count
 
-fileCountByFileType :: FileType -> Output a b -> Natural
+fileCountByFileType :: FileType -> Output a -> Natural
 fileCountByFileType ft = fileCount . tokenOccurrencesByFileType ft
 
-occurrenceCountByFileType :: FileType -> Output a b -> Natural
+occurrenceCountByFileType :: FileType -> Output a -> Natural
 occurrenceCountByFileType ft = occurrenceCount . tokenOccurrencesByFileType ft
 
-totalFileCount :: Output a b -> Natural
+totalFileCount :: Output a -> Natural
 totalFileCount = fileCount . totalOccurrences
 
-totalOccurrenceCount :: Output a b -> Natural
+totalOccurrenceCount :: Output a -> Natural
 totalOccurrenceCount = occurrenceCount . totalOccurrences
 
-tokenOccurrencesByFileType :: FileType -> Output a b -> TokenOccurrences
+tokenOccurrencesByFileType :: FileType -> Output a -> TokenOccurrences
 tokenOccurrencesByFileType ApplicationFile = applicationDirectoryOccurrences
 tokenOccurrencesByFileType TestFile = testDirectoryOccurrences
 tokenOccurrencesByFileType ConfigFile = configDirectoryOccurrences

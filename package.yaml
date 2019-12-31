@@ -26,7 +26,6 @@ dependencies:
 - unordered-containers
 - text
 - filepath
-- hashable
 
 library:
   source-dirs: src
