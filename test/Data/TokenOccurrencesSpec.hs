@@ -12,11 +12,16 @@ spec =
     describe "Data.TokenOccurrences" $
     it "calculates occurrences correctly" $ do
         let outcome = processInput railsConfiguration results
-        totalOccurrences outcome `shouldBe` TokenOccurrences 4 13
-        applicationDirectoryOccurrences outcome `shouldBe` TokenOccurrences 1 1
-        testDirectoryOccurrences outcome `shouldBe` TokenOccurrences 2 11
-        configDirectoryOccurrences outcome `shouldBe` TokenOccurrences 0 0
-        unknownOccurrences outcome `shouldBe` TokenOccurrences 1 1
+        fileCount (totalOccurrences outcome) `shouldBe` 4
+        occurrenceCount (totalOccurrences outcome) `shouldBe` 13
+        fileCount (applicationDirectoryOccurrences outcome) `shouldBe` 1
+        occurrenceCount (applicationDirectoryOccurrences outcome) `shouldBe` 1
+        fileCount (testDirectoryOccurrences outcome) `shouldBe` 2
+        occurrenceCount (testDirectoryOccurrences outcome) `shouldBe` 11
+        fileCount (configDirectoryOccurrences outcome) `shouldBe` 0
+        occurrenceCount (configDirectoryOccurrences outcome) `shouldBe` 0
+        fileCount (unknownOccurrences outcome) `shouldBe` 1
+        occurrenceCount (unknownOccurrences outcome) `shouldBe` 1
 
 results :: Input String FilePath
 results =
@@ -37,4 +42,5 @@ railsConfiguration =
         , applicationCodeDirectories = ["app/", "lib/"]
         , testCodeDirectories = ["spec/", "test/", "features/"]
         , configCodeDirectories = ["config/", "db/"]
+        , automaticLowLikelihood = []
         }

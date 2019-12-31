@@ -3,6 +3,8 @@
 module Data.TokenOccurrences.ProjectConfiguration
     ( ProjectConfiguration(..)
     , FilePathWithMetadata(..)
+    , AutomaticLowLikelihood(..)
+    , Matcher(..)
     , FileType(..)
     , decorateFilePath
     ) where
@@ -19,6 +21,18 @@ data ProjectConfiguration = ProjectConfiguration
     , applicationCodeDirectories :: [T.Text]
     , testCodeDirectories :: [T.Text]
     , configCodeDirectories :: [T.Text]
+    , automaticLowLikelihood :: [AutomaticLowLikelihood]
+    }
+
+data Matcher
+    = PathMatch PredicateOperation
+    | TokenMatch PredicateOperation
+    | FileTypeOccurrenceMatch FileType
+                              Int
+
+data AutomaticLowLikelihood = AutomaticLowLikelihood
+    { automaticLowLikelihoodName :: T.Text
+    , automaticLowLikelihoodMatchers :: [Matcher]
     }
 
 data FileType

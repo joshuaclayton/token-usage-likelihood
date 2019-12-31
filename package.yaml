@@ -32,12 +32,14 @@ library:
   source-dirs: src
   exposed-modules:
   - Data.TokenOccurrences
-  - Data.TextPredicateMatch
+  - Data.TokenUsageLikelihood
 
 tests:
   token-usage-likelihood-test:
     main:                Spec.hs
-    source-dirs:         test
+    source-dirs:
+    - test
+    - src
     ghc-options:
     - -threaded
     - -rtsopts

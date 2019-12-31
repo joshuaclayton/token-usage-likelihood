@@ -3,8 +3,11 @@ module Data.TokenOccurrences
     , ProjectConfiguration(..)
     , Output
     , Input(..)
-    , TokenOccurrences(..)
+    , TokenOccurrences
+    , fileCount
+    , occurrenceCount
     , processInput
+    , input
     , totalOccurrences
     , unknownOccurrences
     , configDirectoryOccurrences
@@ -17,7 +20,6 @@ import Data.Hashable (Hashable)
 import Data.TokenOccurrences.Internal
 import Data.TokenOccurrences.ProjectConfiguration
 import Data.TokenOccurrences.Types
-import qualified GHC.Natural as Nat
 
 processInput :: ProjectConfiguration -> Input a FilePath -> Output a FilePath
 processInput config input' =
@@ -46,10 +48,7 @@ totalOccurrences o =
         ]
 
 calculateOccurrences :: TokenAndOccurrences a b -> TokenOccurrences
-calculateOccurrences (TokenAndOccurrences _ map') =
-    TokenOccurrences
-        (Nat.intToNatural $ length $ HashMap.keys map')
-        (sum $ HashMap.elems map')
+calculateOccurrences (TokenAndOccurrences _ map') = buildTokenOccurrences map'
 
 filterInput :: (b -> Bool) -> Input a b -> Input a b
 filterInput f (Token a) = Token (filterTokenAndOccurrences f a)
