@@ -1,7 +1,6 @@
 module Data.TokenUsageLikelihoodSpec where
 
 import qualified Data.HashMap.Strict as HashMap
-import qualified Data.Text as T
 import Data.TextPredicateMatch
 import Data.TokenOccurrences
 import Data.TokenOccurrences.ProjectConfiguration
@@ -60,7 +59,7 @@ spec =
                 AutomaticLowRemovalLikelihood
                     "Automatic low likelihood: detected as Rails Migration"
 
-definitionAndTest :: Input T.Text
+definitionAndTest :: Input
 definitionAndTest =
     TokenAndAlias
         (TokenAndOccurrences
@@ -70,21 +69,21 @@ definitionAndTest =
              "is_admin"
              (HashMap.fromList [("spec/models/person_spec.rb", 3)]))
 
-onlyDefinition :: Input T.Text
+onlyDefinition :: Input
 onlyDefinition =
     Token
         (TokenAndOccurrences
              "with_comments"
              (HashMap.fromList [("app/models/post.rb", 1)]))
 
-onlyTestDefinition :: Input T.Text
+onlyTestDefinition :: Input
 onlyTestDefinition =
     Token
         (TokenAndOccurrences
              "generate_test_data"
              (HashMap.fromList [("spec/support/fixture_helpers.rb", 1)]))
 
-moderateUseDefinition :: Input T.Text
+moderateUseDefinition :: Input
 moderateUseDefinition =
     Token
         (TokenAndOccurrences
@@ -95,7 +94,7 @@ moderateUseDefinition =
                   , ("spec/models/user_spec.rb", 3)
                   ]))
 
-widelyUsedDefinition :: Input T.Text
+widelyUsedDefinition :: Input
 widelyUsedDefinition =
     Token
         (TokenAndOccurrences
@@ -107,14 +106,14 @@ widelyUsedDefinition =
                   , ("spec/models/user_spec.rb", 5)
                   ]))
 
-patternMatchedDefinition :: Input T.Text
+patternMatchedDefinition :: Input
 patternMatchedDefinition =
     Token
         (TokenAndOccurrences
              "by_user"
              (HashMap.fromList [("web/models/post.ex", 2)]))
 
-railsMigration :: Input T.Text
+railsMigration :: Input
 railsMigration =
     Token
         (TokenAndOccurrences

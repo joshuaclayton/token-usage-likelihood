@@ -14,8 +14,8 @@ data RemovalLikelihood
     | UnknownRemovalLikelihood
     deriving (Show, Eq)
 
-data TokenRemoval a = TokenRemoval
-    { input :: Input a
+data TokenRemoval = TokenRemoval
+    { input :: Input
     , occurrences :: Occurrences
     , removalLikelihood :: RemovalLikelihood
     }

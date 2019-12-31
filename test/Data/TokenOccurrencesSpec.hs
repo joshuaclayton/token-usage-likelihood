@@ -23,7 +23,7 @@ spec =
         fileCount (unknownOccurrences outcome) `shouldBe` 1
         occurrenceCount (unknownOccurrences outcome) `shouldBe` 1
 
-results :: Input String
+results :: Input
 results =
     Token
         (TokenAndOccurrences

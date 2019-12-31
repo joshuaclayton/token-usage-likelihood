@@ -2,13 +2,12 @@ module Data.TokenUsageLikelihood.Calculator
     ( calculateTokenUsage
     ) where
 
-import qualified Data.Text as T
 import Data.TokenOccurrences
 import Data.TokenOccurrences.ProjectConfiguration
 import Data.TokenUsageLikelihood.Internal
 import Data.TokenUsageLikelihood.Types
 
-calculateTokenUsage :: ProjectConfiguration -> Input T.Text -> RemovalLikelihood
+calculateTokenUsage :: ProjectConfiguration -> Input -> RemovalLikelihood
 calculateTokenUsage config input' =
     case autoLowLikelihood of
         Nothing

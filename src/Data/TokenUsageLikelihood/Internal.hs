@@ -34,7 +34,7 @@ occursMoreThanOnce output = totalOccurrenceCount output > 1
 
 matchesAutomaticLowLikelihood ::
        [AutomaticLowLikelihood]
-    -> Input T.Text
+    -> Input
     -> Occurrences
     -> Maybe AutomaticLowLikelihood
 matchesAutomaticLowLikelihood lowLikelihoods input' occurrences' =
@@ -45,7 +45,7 @@ matchesAutomaticLowLikelihood lowLikelihoods input' occurrences' =
     matchesAll i o ll =
         all (matchesOutput i o) (automaticLowLikelihoodMatchers ll)
 
-matchesOutput :: Input T.Text -> Occurrences -> Matcher -> Bool
+matchesOutput :: Input -> Occurrences -> Matcher -> Bool
 matchesOutput input' occurrences' matcher =
     case matcher of
         TokenMatch pre -> any (`check` pre) $ inputTokenNames input'

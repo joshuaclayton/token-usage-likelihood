@@ -11,13 +11,14 @@ module Data.TokenOccurrences.Types
     ) where
 
 import qualified Data.HashMap.Strict as HashMap
+import qualified Data.Text as T
 import qualified GHC.Natural as Nat
 import Numeric.Natural (Natural)
 
-data Input a
-    = Token (TokenAndOccurrences a)
-    | TokenAndAlias (TokenAndOccurrences a)
-                    (TokenAndOccurrences a)
+data Input
+    = Token TokenAndOccurrences
+    | TokenAndAlias TokenAndOccurrences
+                    TokenAndOccurrences
 
 data Occurrences = Occurrences
     { applicationDirectoryOccurrences :: TokenOccurrences
@@ -26,8 +27,8 @@ data Occurrences = Occurrences
     , unknownOccurrences :: TokenOccurrences
     }
 
-data TokenAndOccurrences a =
-    TokenAndOccurrences a
+data TokenAndOccurrences =
+    TokenAndOccurrences T.Text
                         (HashMap.HashMap FilePath Natural)
 
 instance Semigroup TokenOccurrences where
@@ -61,12 +62,12 @@ buildTokenOccurrences map' =
         (0, _) -> NoOccurrences
         (fc, oc) -> TokenOccurrences (fc - 1) (oc - fc)
 
-inputTokenNames :: Input a -> [a]
+inputTokenNames :: Input -> [T.Text]
 inputTokenNames (Token (TokenAndOccurrences t _)) = [t]
 inputTokenNames (TokenAndAlias (TokenAndOccurrences t _) (TokenAndOccurrences a _)) =
     [t, a]
 
-inputFilePaths :: Input a -> [FilePath]
+inputFilePaths :: Input -> [FilePath]
 inputFilePaths (Token (TokenAndOccurrences _ map')) = HashMap.keys map'
 inputFilePaths (TokenAndAlias (TokenAndOccurrences _ map') (TokenAndOccurrences _ map'')) =
     HashMap.keys map' ++ HashMap.keys map''
