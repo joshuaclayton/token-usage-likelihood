@@ -30,7 +30,6 @@ dependencies:
 library:
   source-dirs: src
   exposed-modules:
-  - Data.TokenOccurrences
   - Data.TokenUsageLikelihood
 
 tests:

@@ -1,11 +1,17 @@
 module Data.TokenUsageLikelihood.Calculator
-    ( calculateTokenUsage
+    ( analyze
     ) where
 
-import Data.TokenOccurrences
-import Data.TokenOccurrences.ProjectConfiguration
 import Data.TokenUsageLikelihood.Internal
+import Data.TokenUsageLikelihood.ProjectConfiguration
+import Data.TokenUsageLikelihood.TokenOccurrences
 import Data.TokenUsageLikelihood.Types
+
+analyze :: ProjectConfiguration -> Input -> TokenRemoval
+analyze config input' =
+    TokenRemoval
+        (processInput config input')
+        (calculateTokenUsage config input')
 
 calculateTokenUsage :: ProjectConfiguration -> Input -> RemovalLikelihood
 calculateTokenUsage config input' =

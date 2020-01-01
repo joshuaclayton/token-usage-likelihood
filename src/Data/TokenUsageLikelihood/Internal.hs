@@ -10,10 +10,10 @@ module Data.TokenUsageLikelihood.Internal
     ) where
 
 import qualified Data.Text as T
-import Data.TextPredicateMatch
-import Data.TokenOccurrences
-import Data.TokenOccurrences.ProjectConfiguration
-import Data.TokenOccurrences.Types
+import Data.TokenUsageLikelihood.ProjectConfiguration
+import Data.TokenUsageLikelihood.TextPredicateMatch
+import Data.TokenUsageLikelihood.TokenOccurrences
+import Data.TokenUsageLikelihood.TokenOccurrences.Types
 import Numeric.Natural (Natural)
 
 noTestOccurrences :: Occurrences -> Bool

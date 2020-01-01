@@ -1,4 +1,4 @@
-module Data.TextPredicateMatch
+module Data.TokenUsageLikelihood.TextPredicateMatch
     ( PredicateOperation(..)
     , check
     ) where

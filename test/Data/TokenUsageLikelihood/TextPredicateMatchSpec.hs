@@ -1,6 +1,6 @@
-module Data.TextPredicateMatchSpec where
+module Data.TokenUsageLikelihood.TextPredicateMatchSpec where
 
-import Data.TextPredicateMatch
+import Data.TokenUsageLikelihood.TextPredicateMatch
 import Test.Hspec
 
 main :: IO ()

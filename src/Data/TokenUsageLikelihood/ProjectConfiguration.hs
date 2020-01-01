@@ -1,4 +1,4 @@
-module Data.TokenOccurrences.ProjectConfiguration
+module Data.TokenUsageLikelihood.ProjectConfiguration
     ( ProjectConfiguration(..)
     , AutomaticLowLikelihood(..)
     , Matcher(..)
@@ -9,7 +9,7 @@ module Data.TokenOccurrences.ProjectConfiguration
 import Control.Applicative ((<|>))
 import qualified Data.Maybe as M
 import qualified Data.Text as T
-import Data.TextPredicateMatch
+import Data.TokenUsageLikelihood.TextPredicateMatch
 
 data ProjectConfiguration = ProjectConfiguration
     { configurationName :: T.Text

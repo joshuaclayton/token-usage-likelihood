@@ -4,7 +4,7 @@ module Data.TokenUsageLikelihood.Types
     ) where
 
 import qualified Data.Text as T
-import Data.TokenOccurrences
+import Data.TokenUsageLikelihood.TokenOccurrences
 
 data RemovalLikelihood
     = HighRemovalLikelihood T.Text
@@ -15,7 +15,6 @@ data RemovalLikelihood
     deriving (Show, Eq)
 
 data TokenRemoval = TokenRemoval
-    { input :: Input
-    , occurrences :: Occurrences
+    { occurrences :: Occurrences
     , removalLikelihood :: RemovalLikelihood
     }

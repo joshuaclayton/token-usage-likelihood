@@ -1,7 +1,7 @@
-module Data.TokenOccurrencesSpec where
+module Data.TokenUsageLikelihood.TokenOccurrencesSpec where
 
 import qualified Data.HashMap.Strict as HashMap
-import Data.TokenOccurrences
+import Data.TokenUsageLikelihood.TokenOccurrences
 import Test.Hspec
 
 main :: IO ()

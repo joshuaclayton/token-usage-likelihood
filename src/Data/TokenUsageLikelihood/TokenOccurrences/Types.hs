@@ -1,8 +1,10 @@
-module Data.TokenOccurrences.Types
+module Data.TokenUsageLikelihood.TokenOccurrences.Types
     ( TokenAndOccurrences(..)
     , Input(..)
     , TokenOccurrences
     , Occurrences(..)
+    , tokenWithOccurrences
+    , isAnAliasOf
     , fileCount
     , buildTokenOccurrences
     , occurrenceCount
@@ -46,6 +48,17 @@ data TokenOccurrences
     | TokenOccurrences { fileCountDelta :: Natural
                        , occurrenceCountDelta :: Natural }
     deriving (Show, Eq)
+
+tokenWithOccurrences :: T.Text -> [(FilePath, Natural)] -> Input
+tokenWithOccurrences token pathsAndCounts =
+    Token (TokenAndOccurrences token $ HashMap.fromList pathsAndCounts)
+
+isAnAliasOf :: Input -> Input -> Input
+isAnAliasOf (Token alias) (Token input) = TokenAndAlias input alias
+isAnAliasOf (Token alias) (TokenAndAlias input _) = TokenAndAlias input alias
+isAnAliasOf (TokenAndAlias _ alias) (TokenAndAlias input _) =
+    TokenAndAlias input alias
+isAnAliasOf (TokenAndAlias _ alias) (Token input) = TokenAndAlias input alias
 
 occurrenceCount :: TokenOccurrences -> Natural
 occurrenceCount NoOccurrences = 0

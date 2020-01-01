@@ -1,4 +1,4 @@
-module Data.TokenOccurrences
+module Data.TokenUsageLikelihood.TokenOccurrences
     ( TokenAndOccurrences(..)
     , ProjectConfiguration(..)
     , Input(..)
@@ -15,8 +15,8 @@ module Data.TokenOccurrences
     ) where
 
 import qualified Data.HashMap.Strict as HashMap
-import Data.TokenOccurrences.ProjectConfiguration
-import Data.TokenOccurrences.Types
+import Data.TokenUsageLikelihood.ProjectConfiguration
+import Data.TokenUsageLikelihood.TokenOccurrences.Types
 
 processInput :: ProjectConfiguration -> Input -> Occurrences
 processInput config input' =
